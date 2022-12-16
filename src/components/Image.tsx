@@ -3,7 +3,7 @@ import { ImgHTMLAttributes } from "react"
 import { classNames } from "../utils/classnames"
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  altDescription: string | null
+  altDescription?: string
   backgroundColor?: string
 }
 

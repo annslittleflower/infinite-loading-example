@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from "react"
 
+// UNDER CONSTRUCTION (find out how twitter did this)
 
 
 interface VirtualizedProps {
@@ -52,7 +53,7 @@ const Virtualized = () => {
   console.log('awawd', testData.slice(startRow, startRow + visibleRows))
 
   return (
-    <div style={{ height: rowHeight * visibleRows, overflow: 'auto', margin: '3rem' }} ref={scrollRef}>
+    <div style={{ height: rowHeight * visibleRows }} className='virtualized' ref={scrollRef}>
       <div style={{ height: getTopHeight()}} />
       <div>
         {testData.slice(startRow, startRow + visibleRows)

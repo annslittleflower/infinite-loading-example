@@ -17,6 +17,6 @@ export const getData = async ({ page, perPage }: RequestParams) => {
       totalImages,
     }
   } catch (e) {
-    console.error(e)
+    throw (e)
   }
 }
