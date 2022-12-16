@@ -1,20 +1,36 @@
 import Image from "./Image"
+import { ImageData } from "../types/ImageData"
 
-const PreviewModal = () => {
+interface PreviewModalProps {
+  selectedImage: ImageData
+  changeImage: (idx: number) => void
+}
+
+const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
   return (
     <div className="preview-modal">
       <div className="preview-header">
         <div className="avatar-wrapper">
-          <Image src="http://placekitten.com/200/300" className="avatar" />
-          <span>Name Lastname</span>
+          <Image src={selectedImage.user.profile_image.small} className="avatar" />
+          <span>{selectedImage.user.name}</span>
         </div>
         <div>
           hello
         </div>
       </div>
-      <Image src="https://placekitten.com/g/1000/1000" className="full-image" />
-      <button className="preview-modal-buttons preview-modal-buttons__prev">&lt;</button>
-      <button className="preview-modal-buttons preview-modal-buttons__next">&gt;</button>
+      <Image src={selectedImage.urls.regular} className="full-image" />
+      <button
+        className="preview-modal-buttons preview-modal-buttons__prev"
+        onClick={() => changeImage(-1)}
+      >
+        &lt;
+      </button>
+      <button
+        className="preview-modal-buttons preview-modal-buttons__next"
+        onClick={() => changeImage(1)}
+      >
+        &gt;
+      </button>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, MouseEvent } from 'react';
 
 import Image from './components/Image';
 import GhostLoaders from './components/GhostLoaders';
@@ -6,22 +6,11 @@ import Modal from './components/Modal'
 import PreviewModal from './components/PreviewModal';
 
 import { getGridChildClassNameByIndex } from './utils/grid'
+import { classNames } from './utils/classnames';
+
+import { ImageData } from './types/ImageData';
 
 import {getData} from './api'
-
-interface ImageData {
-  id: string;
-  alt_description: string;
-  color: string;
-  urls: {
-    full: string;
-    raw: string;
-    regular: string;
-    small: string;
-    small_s3: string;
-    thumb: string;
-  }
-}
 
 const App = () => {
   const [images, setImages] = useState<ImageData[]>([])
@@ -29,7 +18,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [totalImages, setTotalImages] = useState<number>(100);
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | undefined>(undefined)
 
   useEffect(() => {
     console.log('currentPage', currentPage)
@@ -62,6 +51,28 @@ const App = () => {
     }
   }, [])
 
+  const selectImage = (e: MouseEvent<HTMLElement>) => {
+    const idx = +(e.currentTarget.dataset.imageindex as string);
+    setSelectedImageIndex(idx)
+  }
+
+  const changeImage = (inc: number) => {
+    const newIndex = (selectedImageIndex as number) + inc 
+    if (newIndex === images.length) {
+      setSelectedImageIndex(0)
+      return
+    }
+
+    if (newIndex < 0) {
+      setSelectedImageIndex(images.length - 1)
+      return
+    }
+
+    setSelectedImageIndex(newIndex)
+  }
+
+  const selectedImage = images.find((element, index) => index === selectedImageIndex);
+
   return (
     <div className="app">
       <div className="image-grid">
@@ -69,16 +80,21 @@ const App = () => {
           <Image
             src={img.urls.regular}
             key={img.id}
-            className={getGridChildClassNameByIndex(index + 1)}
+            className={classNames([getGridChildClassNameByIndex(index + 1), 'grid-image'])}
             altDescription={img.alt_description}
             backgroundColor={img.color}
+            data-imageindex={index}
+            onClick={selectImage}
           />
         ): null}
         {isLoading ? <GhostLoaders count={10} /> : null}
       </div>
-      {isModalOpened ? (
-        <Modal onClose={() => setIsModalOpened(false)}>
-          <PreviewModal />
+      {selectedImage ? (
+        <Modal onClose={() => setSelectedImageIndex(undefined)}>
+          <PreviewModal
+            selectedImage={selectedImage}
+            changeImage={changeImage}
+          />
         </Modal>
       ): null}
     </div>
