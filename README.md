@@ -1,6 +1,9 @@
  
 ## Infinite Feed Of Images
 
+## Live version
+
+[https://annslittleflower.github.io/infinite-loading-virtualized-example/](https://annslittleflower.github.io/infinite-loading-virtualized-example/)
 
 ### `nvm use`
 
@@ -19,3 +22,4 @@ save only needed fields in images array \
 error handling \
 fix TODO comments in code \
 virtualized
+fix load jumping
