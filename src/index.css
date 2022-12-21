@@ -6,11 +6,11 @@
 
 .image-grid {
   display: grid;
-  justify-items: center;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1rem;
-  padding: 2rem;
+  grid-template-columns: repeat(3, fit-content(400px));
   grid-auto-flow: dense;
+  padding: 2rem;
+  grid-gap: 1rem;
+  justify-content: center;
 }
 
 .image-grid_1 {
@@ -198,9 +198,46 @@
   .image {
     max-height: 80vh;
   }
+}
 
-  .modal-content {
-    height: auto;
-    overflow: hidden;
-  }
+.dropdown {
+  font-weight: 600;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  background-color: #00bf73;
+  text-transform: capitalize;
+  cursor: pointer;
+  border-radius: 0.2rem;
+}
+
+.dropdown_wrapper {
+  position: relative;
+}
+
+.dropdown_menu {
+  margin-top: 1rem;
+  background-color: #2e2e2e;
+  position: absolute;
+  right: 0;
+  color: #fff;
+}
+
+.dropdown_option {
+  padding: 0.8rem 1rem 0 1rem;
+  cursor: pointer;
+  min-width: 200px;
+  text-align: left;
+}
+
+.dropdown_option:last-child {
+  padding-bottom: 0.8rem;
+}
+
+.dropdown_option:hover {
+  font-weight: 700;
+}
+
+#hiddenImagesWrapper  img {
+  width: 0;
+  height: 0;
 }

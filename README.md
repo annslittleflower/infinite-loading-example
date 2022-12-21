@@ -1,16 +1,21 @@
  
 ## Infinite Feed Of Images
 
+
+### `nvm use`
+
+### `npm i`
+
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
 
 ### TODO
 
-save only needed fields
-mobile modal swipes instead of arrows
+save only needed fields in images array \
+error handling \
+fix TODO comments in code \
+virtualized

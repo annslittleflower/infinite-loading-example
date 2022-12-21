@@ -50,8 +50,6 @@ const Virtualized = () => {
     }
   }, [])
 
-  console.log('awawd', testData.slice(startRow, startRow + visibleRows))
-
   return (
     <div style={{ height: rowHeight * visibleRows }} className='virtualized' ref={scrollRef}>
       <div style={{ height: getTopHeight()}} />

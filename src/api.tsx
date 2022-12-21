@@ -11,7 +11,6 @@ export const getData = async ({ page, perPage }: RequestParams) => {
   try {
     const response = await axios.get(`https://api.unsplash.com/photos?page=${page}&per_page=${perPage}&client_id=${CLIENT_ID}`)
     const totalImages = +(response.headers["x-total"] || 0)
-    console.log(response)
     return {
       images: response.data,
       totalImages,

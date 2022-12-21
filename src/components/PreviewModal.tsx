@@ -1,5 +1,8 @@
-import Image from "./Image"
-import { ImageData } from "../types/ImageData"
+import { useEffect, useCallback, useState } from "react"
+import axios from "axios"
+import {default as ImageComponent} from "./Image"
+import { ImageData, URLMap } from "../types/ImageData"
+import Dropdown, {OptionType} from './Dropdown'
 
 interface PreviewModalProps {
   selectedImage: ImageData
@@ -7,18 +10,76 @@ interface PreviewModalProps {
 }
 
 const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
+
+  const [dimensions, setDimensions] = useState<{label: string, value: string}[]>([])
+
+  const getImageSizes = useCallback(() => {
+    // TODO improve loading dropdown experience and order 
+    const hiddenImagesWrapper = document.createElement('div');
+    hiddenImagesWrapper.id = 'hiddenImagesWrapper'
+    document.body.appendChild(hiddenImagesWrapper)
+
+    const imageURLs = selectedImage.urls
+    Object.keys(imageURLs).forEach((key) => {
+      const url = imageURLs[key as keyof URLMap]
+      const img = document.createElement("img");
+      img.id = url
+      img.src = url
+
+      document.getElementById('hiddenImagesWrapper')?.appendChild(img)
+
+      img.onload = () => {
+        const dimension = {value: url, label: `${key} (${img.naturalWidth} x ${img.naturalHeight})`}
+        setDimensions((prev) => [...prev, dimension])
+      }
+    })
+  }, [selectedImage.urls])
+
+  useEffect(() => {
+    getImageSizes()
+    return () => {
+      document.getElementById('hiddenImagesWrapper')?.remove()
+    }
+  }, [getImageSizes])
+
+  const onSelectOption = (o: OptionType) => {
+    axios.get(
+      o.value,
+      { responseType: 'blob' }
+    )
+      .then((response) => {
+        const blobURL = URL.createObjectURL(response.data);
+        const link = document.createElement("a");
+        link.href = blobURL;
+        link.download = o.label;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+    // const link = document.createElement('a');
+    // link.href = o.value;
+    // link.target = '_blank';
+    // link.download = 'd';
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
+    // THIS DOES NOT WORK FOR DIFFERENT DOMAINS !!!
+  }
+
   return (
     <div className="preview-modal">
       <div className="preview-header">
         <div className="avatar-wrapper">
-          <Image src={selectedImage.user.profile_image.small} className="avatar" />
+          <ImageComponent src={selectedImage.user.profile_image.small} className="avatar" />
           <span>{selectedImage.user.name}</span>
         </div>
-        <div>
-          hello
-        </div>
+        <Dropdown
+          options={dimensions}
+          title="download free"
+          onSelectOption={onSelectOption}
+        />
       </div>
-      <Image src={selectedImage.urls.regular} className="full-image" />
+      <ImageComponent src={selectedImage.urls.regular} className="full-image" />
       <button
         className="preview-modal-buttons preview-modal-buttons__prev"
         onClick={() => changeImage(-1)}

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, MouseEvent, useRef } from 'react';
 import { createPortal } from 'react-dom'
 
 export interface ModalProps {
@@ -7,6 +7,9 @@ export interface ModalProps {
 }
 
 const Modal = ({onClose, children}: ModalProps) => {
+
+  const backgroundRef = useRef(null)
+
   useEffect(() => {
     document.body.classList.toggle('noscroll', true)
     return () => {
@@ -14,14 +17,20 @@ const Modal = ({onClose, children}: ModalProps) => {
     }
   }, [])
 
-  const closeModal = () => {
-    onClose()
+  const closeModal = (e: MouseEvent<HTMLDivElement>) => {
+    if ((e.target as Node) === backgroundRef.current) {
+      onClose()
+    }
   }
 
   return createPortal(
-    <div className="modal-wrapper" onClick={closeModal}>
-      <div className="close-modal">x</div>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-wrapper"
+      onClick={closeModal}
+      ref={backgroundRef}
+    >
+      <div className="close-modal" onClick={onClose}>x</div>
+      <div className="modal-content">
         {children}
       </div>
     </div>,

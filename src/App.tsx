@@ -17,11 +17,9 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [totalImages, setTotalImages] = useState<number>(100);
-  const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | undefined>(undefined)
 
   useEffect(() => {
-    console.log('currentPage', currentPage)
     setIsLoading(true)
     const getImages = async () => {
       try {
@@ -29,6 +27,7 @@ const App = () => {
         setImages((prevImages) =>  [...prevImages, ...data?.images])
         setIsLoading(false)
       } catch (e) {
+        // TODO handle error
         console.log('ad!!@@@', e)
       }
     }
@@ -41,8 +40,6 @@ const App = () => {
     }
   };
 
-  console.log('images', images)
-
   useEffect(() => {
     document.addEventListener('scroll', onScroll)
     
@@ -52,8 +49,10 @@ const App = () => {
   }, [])
 
   const selectImage = (e: MouseEvent<HTMLElement>) => {
-    const idx = +(e.currentTarget.dataset.imageindex as string);
-    setSelectedImageIndex(idx)
+    if (e.target instanceof HTMLImageElement) {
+      const idx = +(e.target.dataset.imageindex as string);
+      setSelectedImageIndex(idx)
+    }
   }
 
   const changeImage = (inc: number) => {
@@ -75,7 +74,10 @@ const App = () => {
 
   return (
     <div className="app">
-      <div className="image-grid">
+      <div
+        className="image-grid" 
+        onClick={selectImage}      
+      >
         {images.length ? images.map((img, index) =>
           <Image
             src={img.urls.regular}
@@ -84,7 +86,6 @@ const App = () => {
             altDescription={img.alt_description}
             backgroundColor={img.color}
             data-imageindex={index}
-            onClick={selectImage}
           />
         ): null}
         {isLoading ? <GhostLoaders count={10} /> : null}
