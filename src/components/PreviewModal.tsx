@@ -79,7 +79,9 @@ const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
           onSelectOption={onSelectOption}
         />
       </div>
+      {/* <div> */}
       <ImageComponent src={selectedImage.urls.regular} className="full-image" />
+      {/* </div> */}
       <button
         className="preview-modal-buttons preview-modal-buttons__prev"
         onClick={() => changeImage(-1)}

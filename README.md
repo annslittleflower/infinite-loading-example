@@ -22,9 +22,11 @@ save only needed fields in images array \
 error handling \
 fix TODO comments in code \
 virtualized \
-fix load jumping \
+fix modal image load jumping \
 improve modal changing (but nice already, got key hack :)) \
 fix modal image padding \
 split App component \
 image reloading component + spinners \
+split css \
+keyboard arrow modal controls \
 
