@@ -21,5 +21,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 save only needed fields in images array \
 error handling \
 fix TODO comments in code \
-virtualized
-fix load jumping
+virtualized \
+fix load jumping \
+improve modal changing (but nice already, got key hack :)) \
+fix modal image padding \
+split App component \
+image reloading component + spinners \
+

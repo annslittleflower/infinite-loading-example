@@ -91,7 +91,10 @@ const App = () => {
         {isLoading ? <GhostLoaders count={10} /> : null}
       </div>
       {selectedImage ? (
-        <Modal onClose={() => setSelectedImageIndex(undefined)}>
+        <Modal
+          onClose={() => setSelectedImageIndex(undefined)}
+          key={selectedImage.id} // hack to force modal body not to show previous content
+        >
           <PreviewModal
             selectedImage={selectedImage}
             changeImage={changeImage}
