@@ -1,10 +1,6 @@
  
 ## Infinite Feed Of Images
 
-## Live version
-
-[https://annslittleflower.github.io/infinite-loading-virtualized-example/](https://annslittleflower.github.io/infinite-loading-virtualized-example/)
-
 ### `nvm use`
 
 ### `npm i`
