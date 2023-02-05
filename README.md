@@ -18,15 +18,5 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### TODO
 
-save only needed fields in images array \
-error handling \
-fix TODO comments in code \
-virtualized \
-fix modal image load jumping \
-improve modal changing (but nice already, got key hack :)) \
-fix modal image padding \
-split App component \
-image reloading component + spinners \
-split css \
-keyboard arrow modal controls \
 
+try to do virtualized few of images at once
