@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const CLIENT_ID = 'joYXnDTY_j7B2_9cgfTvIYJY6g5bxtwD7VUqAYfD5Ck'
+const CLIENT_ID = '8DMbd5ry4DyizvfImybqqGQr5ybHOVJAbCJGWSHyVxRGQC1Tz8T16ElM'
 
 interface RequestParams {
   page: number;
@@ -9,10 +9,14 @@ interface RequestParams {
 
 export const getData = async ({ page, perPage }: RequestParams) => {
   try {
-    const response = await axios.get(`https://api.unsplash.com/photos?page=${page}&per_page=${perPage}&client_id=${CLIENT_ID}`)
-    const totalImages = +(response.headers["x-total"] || 0)
+    const response = await axios.get(
+      `https://api.pexels.com/v1/curated?page=${page}&per_page=${perPage}`,
+      {headers: {'Authorization': CLIENT_ID}}
+    )
+    const totalImages = response.data.total_results
+    console.log(response.data.photos)
     return {
-      images: response.data,
+      images: response.data.photos,
       totalImages,
     }
   } catch (e) {

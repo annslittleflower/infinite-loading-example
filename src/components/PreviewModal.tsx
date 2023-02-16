@@ -19,7 +19,7 @@ const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
     hiddenImagesWrapper.id = 'hiddenImagesWrapper'
     document.body.appendChild(hiddenImagesWrapper)
 
-    const imageURLs = selectedImage.urls
+    const imageURLs = selectedImage.src
     Object.keys(imageURLs).forEach((key) => {
       const url = imageURLs[key as keyof URLMap]
       const img = document.createElement("img");
@@ -33,7 +33,7 @@ const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
         setDimensions((prev) => [...prev, dimension])
       }
     })
-  }, [selectedImage.urls])
+  }, [selectedImage.src])
 
   useEffect(() => {
     getImageSizes()
@@ -70,8 +70,8 @@ const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
     <div className="preview-modal">
       <div className="preview-header">
         <div className="avatar-wrapper">
-          <ImageComponent src={selectedImage.user.profile_image.small} className="avatar" />
-          <span>{selectedImage.user.name}</span>
+          {/* <ImageComponent src={selectedImage.photographer_url} className="avatar" /> */}
+          <span>{selectedImage.photographer}</span>
         </div>
         <Dropdown
           options={dimensions}
@@ -79,9 +79,7 @@ const PreviewModal = ({selectedImage, changeImage}: PreviewModalProps) => {
           onSelectOption={onSelectOption}
         />
       </div>
-      {/* <div> */}
-      <ImageComponent src={selectedImage.urls.regular} className="full-image" />
-      {/* </div> */}
+      <ImageComponent src={selectedImage.src.large2x} className="full-image" />
       <button
         className="preview-modal-buttons preview-modal-buttons__prev"
         onClick={() => changeImage(-1)}

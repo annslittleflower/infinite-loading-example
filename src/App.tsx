@@ -80,11 +80,11 @@ const App = () => {
       >
         {images.length ? images.map((img, index) =>
           <Image
-            src={img.urls.regular}
+            src={img.src.large}
             key={img.id}
             className={classNames([getGridChildClassNameByIndex(index + 1), 'grid-image'])}
             altDescription={img.alt_description}
-            backgroundColor={img.color}
+            backgroundColor={img.avg_color}
             data-imageindex={index}
           />
         ): null}
