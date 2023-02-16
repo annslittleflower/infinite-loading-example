@@ -9,7 +9,7 @@
 
 ## Live version
 
-[https://annslittleflower.github.io/infinite-loading-virtualized-example/](https://annslittleflower.github.io/infinite-loading-virtualized-example/)
+[https://annslittleflower.github.io/infinite-loading-example/](https://annslittleflower.github.io/infinite-loading-example/)
 
 
 Runs the app in the development mode.\
